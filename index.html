@@ -5,12 +5,203 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0B6B4F">
   <meta name="description" content="Mealmate — Premium Mess Meal Management System">
+  <meta name="application-name" content="Mealmate">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Mealmate">
+
   <title>Mealmate</title>
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
 </head>
 <body>
-  <main id="app" aria-live="polite">
-    <h1>Mealmate</h1>
-    <p>Mess Meal Management System</p>
-  </main>
+  <noscript>
+    <div class="noscript-message">
+      Mealmate চালাতে JavaScript চালু করুন।
+    </div>
+  </noscript>
+
+  <div id="app" class="app-shell" aria-live="polite">
+    <header class="app-header" data-app-header>
+      <div class="app-header__inner">
+        <button
+          class="icon-button app-header__menu"
+          type="button"
+          data-action="toggle-sidebar"
+          aria-label="Navigation menu"
+          aria-controls="app-sidebar"
+          aria-expanded="false">
+          <span aria-hidden="true">☰</span>
+        </button>
+
+        <a class="brand" href="./index.html" data-route="dashboard" aria-label="Mealmate Home">
+          <span class="brand__mark" aria-hidden="true">M</span>
+          <span class="brand__text">
+            <strong>Mealmate</strong>
+            <small>Mess Meal Management</small>
+          </span>
+        </a>
+
+        <div class="app-header__actions">
+          <span class="sync-status" data-sync-status>Offline</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside id="app-sidebar" class="app-sidebar" data-app-sidebar aria-label="Main navigation">
+        <nav class="main-nav">
+          <a class="nav-item is-active" href="./index.html" data-route="dashboard">
+            <span class="nav-item__icon" aria-hidden="true">⌂</span>
+            <span>Dashboard</span>
+          </a>
+          <a class="nav-item" href="./pages/meals.html" data-route="meals">
+            <span class="nav-item__icon" aria-hidden="true">▣</span>
+            <span>Today's Meals</span>
+          </a>
+          <a class="nav-item" href="./pages/members.html" data-route="members">
+            <span class="nav-item__icon" aria-hidden="true">♙</span>
+            <span>Members</span>
+          </a>
+          <a class="nav-item" href="./pages/reports.html" data-route="reports">
+            <span class="nav-item__icon" aria-hidden="true">▤</span>
+            <span>Reports</span>
+          </a>
+          <a class="nav-item" href="./pages/settings.html" data-route="settings">
+            <span class="nav-item__icon" aria-hidden="true">⚙</span>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <small>Mealmate</small>
+          <span data-app-version>v0.1.0</span>
+        </div>
+      </aside>
+
+      <main id="main-content" class="main-content" tabindex="-1">
+        <section class="page-header" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">MESS DASHBOARD</p>
+            <h1 id="page-title">আজকের হিসাব</h1>
+            <p class="page-date" data-today-date>Loading date…</p>
+          </div>
+          <div class="page-header__actions">
+            <a class="button button--primary" href="./pages/meals.html">Meal Update</a>
+            <button class="button button--secondary" type="button" data-action="add-money">Add Money</button>
+          </div>
+        </section>
+
+        <section class="dashboard-grid" aria-label="Today's overview">
+          <article class="stat-card">
+            <div class="stat-card__label">Mess</div>
+            <div class="stat-card__value" data-dashboard="mess-name">—</div>
+            <div class="stat-card__meta" data-dashboard="member-count">Member: —</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-card__label">Total Deposit</div>
+            <div class="stat-card__value" data-dashboard="total-deposit">৳0</div>
+            <div class="stat-card__meta">All members</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-card__label">Meal Expense</div>
+            <div class="stat-card__value" data-dashboard="meal-expense">৳0</div>
+            <div class="stat-card__meta">Current হিসাব</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-card__label">Current Balance</div>
+            <div class="stat-card__value" data-dashboard="current-balance">৳0</div>
+            <div class="stat-card__meta" data-dashboard="balance-status">No warning</div>
+          </article>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">MEAL SUMMARY</p>
+              <h2>আজকের Meal</h2>
+            </div>
+            <a class="text-link" href="./pages/meals.html">Update →</a>
+          </div>
+
+          <div class="summary-grid">
+            <div class="summary-item"><span>Full</span><strong data-dashboard="full-count">0</strong></div>
+            <div class="summary-item"><span>Day</span><strong data-dashboard="day-count">0</strong></div>
+            <div class="summary-item"><span>Night</span><strong data-dashboard="night-count">0</strong></div>
+            <div class="summary-item"><span>Guest</span><strong data-dashboard="guest-count">0</strong></div>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">MARKET SUMMARY</p>
+              <h2>বাজারের হিসাব</h2>
+            </div>
+          </div>
+
+          <div class="market-summary">
+            <div class="market-card">
+              <span>Day Market</span>
+              <strong data-dashboard="market-day">0</strong>
+            </div>
+            <div class="market-card">
+              <span>Night Market</span>
+              <strong data-dashboard="market-night">0</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" data-dashboard-warning-section hidden>
+          <div class="warning-card" role="alert">
+            <strong>ব্যালেন্স অনেক কমে গেছে</strong>
+            <p>কিছু member-এর balance -৳500 বা তার নিচে আছে।</p>
+            <a href="./pages/members.html">Member balance দেখুন →</a>
+          </div>
+        </section>
+
+        <section class="empty-state" data-dashboard-empty hidden>
+          <div class="empty-state__icon" aria-hidden="true">◎</div>
+          <h2>Mealmate সেটআপ করুন</h2>
+          <p>প্রথমে Mess, Room এবং Member তথ্য সেটআপ করুন। তারপর প্রতিদিনের meal ও money হিসাব শুরু হবে।</p>
+          <a class="button button--primary" href="./pages/setup.html">Setup শুরু করুন</a>
+        </section>
+      </main>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Quick navigation">
+      <a class="bottom-nav__item is-active" href="./index.html" data-route="dashboard">
+        <span aria-hidden="true">⌂</span>
+        <small>Home</small>
+      </a>
+      <a class="bottom-nav__item" href="./pages/meals.html" data-route="meals">
+        <span aria-hidden="true">▣</span>
+        <small>Meals</small>
+      </a>
+      <a class="bottom-nav__item" href="./pages/reports.html" data-route="reports">
+        <span aria-hidden="true">▤</span>
+        <small>Reports</small>
+      </a>
+      <a class="bottom-nav__item" href="./pages/settings.html" data-route="settings">
+        <span aria-hidden="true">⚙</span>
+        <small>Settings</small>
+      </a>
+    </nav>
+  </div>
+
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <div id="modal-root" class="modal-root" aria-live="polite"></div>
+
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>
