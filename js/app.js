@@ -36,7 +36,9 @@ import {
   onAuthStateChange,
   checkSupabaseConnection,
 } from "./supabase.js";
-
+import {
+  getFirstRunDestination,
+} from "./auth.js";
 
 /* =========================================================
    1. APP STATE
@@ -80,8 +82,9 @@ async function initializeApp() {
     initializeSidebar();
     initializeNetworkStatus();
     initializeGlobalErrorHandling();
-
     await initializeSupabaseState();
+
+    await enforceEntryRouting();
 
     await registerServiceWorker();
 
@@ -470,7 +473,133 @@ async function initializeSupabaseState() {
 
   subscribeToAuthChanges();
 }
+/* =========================================================
+   9.1. AUTH ENTRY ROUTING
+   ========================================================= */
 
+/**
+ * Root dashboard entry must always resolve to:
+ *
+ * No session
+ *   → pages/login.html
+ *
+ * Session + no Mess
+ *   → pages/setup.html
+ *
+ * Session + active Mess
+ *   → index.html
+ *
+ * This guard runs only on the root dashboard page so that
+ * login/setup pages cannot create a redirect loop.
+ *
+ * @returns {Promise<void>}
+ */
+async function enforceEntryRouting() {
+  if (!isRootDashboardPage()) {
+    return;
+  }
+
+  /*
+   * Do not make a routing decision while Supabase itself
+   * is unreachable. This prevents an offline/network error
+   * from incorrectly looking like a logged-out state.
+   */
+  if (!appState.supabaseConnected) {
+    return;
+  }
+
+  try {
+    const result =
+      await getFirstRunDestination();
+
+    if (!result?.destination) {
+      return;
+    }
+
+    switch (result.destination) {
+      case "login":
+        navigateFromRoot(
+          "pages/login.html"
+        );
+        return;
+
+      case "setup":
+        navigateFromRoot(
+          ROUTES.setup
+        );
+        return;
+
+      case "dashboard":
+        /*
+         * Already on the dashboard.
+         */
+        return;
+
+      default:
+        console.warn(
+          "[Mealmate] Unknown auth destination:",
+          result.destination
+        );
+    }
+  } catch (error) {
+    console.error(
+      "[Mealmate] Entry routing error:",
+      error
+    );
+
+    /*
+     * Do not blank the dashboard if routing lookup fails.
+     * The existing app shell remains available.
+     */
+  }
+}
+
+
+/**
+ * Checks whether the current page is the root dashboard.
+ *
+ * Supports:
+ *   /Mealmate/
+ *   /Mealmate/index.html
+ *
+ * @returns {boolean}
+ */
+function isRootDashboardPage() {
+  const path =
+    window.location.pathname
+      .replace(/\\/g, "/");
+
+  return (
+    path.endsWith("/") ||
+    path.endsWith("/index.html")
+  );
+}
+
+
+/**
+ * Builds a GitHub Pages-safe URL from the root app entry.
+ *
+ * @param {string} route
+ * @returns {void}
+ */
+function navigateFromRoot(route) {
+  const cleanRoute =
+    String(route)
+      .replace(/^\/+/, "");
+
+  const targetUrl =
+    new URL(
+      `./${cleanRoute}`,
+      new URL(
+        "./index.html",
+        window.location.href
+      )
+    ).href;
+
+  window.location.assign(
+    targetUrl
+  );
+}
 
 /**
  * Safe current-user lookup.
