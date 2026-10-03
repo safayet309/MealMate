@@ -147,7 +147,26 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
 }
+/* =========================================================
+   Mealmate — Component Contract Tokens
+   Required by global.css and components.css
+   ========================================================= */
 
+/* Component dimensions */
+:root {
+  --card-radius: var(--radius-xl);
+
+  /* Extended shadows */
+  --shadow-xl:
+    0 24px 60px rgba(15, 23, 42, 0.12);
+
+  /* Extended semantic text colors */
+  --color-success-text: #15803d;
+  --color-warning-text: #b45309;
+
+  /* Layer used by dropdown/popover components */
+  --z-dropdown: 35;
+}
 /* Keep reduced-motion behavior centralized so every module can respect it. */
 @media (prefers-reduced-motion: reduce) {
   :root {
