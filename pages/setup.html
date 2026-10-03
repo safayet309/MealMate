@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="bn-BD">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
+  <meta
+    name="theme-color"
+    content="#0B6B4F"
+  />
+
+  <meta
+    name="description"
+    content="Mealmate Mess Setup Wizard"
+  />
+
+  <title>Mealmate — Mess Setup</title>
+
+  <link
+    rel="manifest"
+    href="../manifest.webmanifest"
+  />
+
+  <link
+    rel="icon"
+    href="../assets/icons/icon-192.png"
+    type="image/png"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../css/variables.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../css/global.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../css/components.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../css/responsive.css"
+  />
+</head>
+
+<body class="auth-page setup-page">
+
+  <div
+    id="app"
+    class="app"
+    data-app-state="starting"
+  >
+
+    <!-- =====================================================
+         SETUP WRAPPER
+    ====================================================== -->
+
+    <main class="auth-main">
+
+      <section
+        class="setup-shell"
+        aria-labelledby="setup-title"
+      >
+
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
+        <header class="setup-header">
+
+          <a
+            class="brand"
+            href="../index.html"
+            aria-label="Mealmate Home"
+          >
+            <span class="brand-mark">M</span>
+
+            <span class="brand-copy">
+              <strong>Mealmate</strong>
+              <small>Mess Meal Management</small>
+            </span>
+          </a>
+
+          <div class="setup-status">
+            <span
+              class="sync-status"
+              data-sync-status
+              data-status="syncing"
+            >
+              Connecting
+            </span>
+          </div>
+
+        </header>
+
+
+        <!-- =================================================
+             TITLE
+        ================================================== -->
+
+        <div class="setup-intro">
+
+          <span class="badge badge--success">
+            First-time setup
+          </span>
+
+          <h1 id="setup-title">
+            আপনার Mess সেটআপ করুন
+          </h1>
+
+          <p>
+            কয়েকটি ধাপে Mess-এর তথ্য, Room/Member এবং
+            প্রাথমিক Meal Rate সেট করুন।
+          </p>
+
+        </div>
+
+
+        <!-- =================================================
+             PROGRESS
+        ================================================== -->
+
+        <nav
+          class="setup-progress"
+          aria-label="Setup progress"
+        >
+
+          <button
+            type="button"
+            class="setup-progress__item is-active"
+            data-step-trigger="1"
+            aria-current="step"
+          >
+            <span class="setup-progress__number">1</span>
+
+            <span class="setup-progress__label">
+              Mess Info
+            </span>
+          </button>
+
+          <span
+            class="setup-progress__line"
+            aria-hidden="true"
+          ></span>
+
+          <button
+            type="button"
+            class="setup-progress__item"
+            data-step-trigger="2"
+          >
+            <span class="setup-progress__number">2</span>
+
+            <span class="setup-progress__label">
+              Members
+            </span>
+          </button>
+
+          <span
+            class="setup-progress__line"
+            aria-hidden="true"
+          ></span>
+
+          <button
+            type="button"
+            class="setup-progress__item"
+            data-step-trigger="3"
+          >
+            <span class="setup-progress__number">3</span>
+
+            <span class="setup-progress__label">
+              Rates
+            </span>
+          </button>
+
+        </nav>
+
+
+        <!-- =================================================
+             GLOBAL SETUP ERROR
+        ================================================== -->
+
+        <div
+          id="setup-error"
+          class="alert alert--error"
+          role="alert"
+          aria-live="polite"
+          hidden
+        ></div>
+
+
+        <!-- =================================================
+             SETUP FORM
+        ================================================== -->
+
+        <form
+          id="mess-setup-form"
+          class="setup-form"
+          novalidate
+        >
+
+          <!-- ===============================================
+               STEP 1 — MESS INFORMATION
+          ================================================ -->
+
+          <section
+            class="setup-step is-active"
+            data-step="1"
+            aria-labelledby="step-1-title"
+          >
+
+            <div class="card setup-card">
+
+              <div class="card-header">
+
+                <div>
+                  <span class="eyebrow">
+                    STEP 01
+                  </span>
+
+                  <h2 id="step-1-title">
+                    Mess Information
+                  </h2>
+
+                  <p>
+                    আপনার Mess-এর মূল তথ্যগুলো দিন।
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="form-grid">
+
+                <!-- Mess Name -->
+
+                <div class="form-field form-field--full">
+
+                  <label
+                    for="mess-name"
+                    class="form-label"
+                  >
+                    Mess Name
+                    <span aria-hidden="true">*</span>
+                  </label>
+
+                  <input
+                    id="mess-name"
+                    name="name"
+                    type="text"
+                    class="form-input"
+                    placeholder="যেমন: Green View Mess"
+                    autocomplete="organization"
+                    maxlength="100"
+                    required
+                  />
+
+                  <p
+                    id="mess-name-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+
+                <!-- Room Start -->
+
+                <div class="form-field">
+
+                  <label
+                    for="room-start"
+                    class="form-label"
+                  >
+                    Room Start
+                    <span aria-hidden="true">*</span>
+                  </label>
+
+                  <input
+                    id="room-start"
+                    name="roomStart"
+                    type="number"
+                    class="form-input"
+                    inputmode="numeric"
+                    min="1"
+                    max="99999"
+                    step="1"
+                    placeholder="101"
+                    required
+                  />
+
+                  <p
+                    id="room-start-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+
+                <!-- Room End -->
+
+                <div class="form-field">
+
+                  <label
+                    for="room-end"
+                    class="form-label"
+                  >
+                    Room End
+                    <span aria-hidden="true">*</span>
+                  </label>
+
+                  <input
+                    id="room-end"
+                    name="roomEnd"
+                    type="number"
+                    class="form-input"
+                    inputmode="numeric"
+                    min="1"
+                    max="99999"
+                    step="1"
+                    placeholder="110"
+                    required
+                  />
+
+                  <p
+                    id="room-end-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+
+                <!-- Border Count -->
+
+                <div class="form-field form-field--full">
+
+                  <label
+                    for="border-count"
+                    class="form-label"
+                  >
+                    মোট Border
+                    <span aria-hidden="true">*</span>
+                  </label>
+
+                  <input
+                    id="border-count"
+                    name="borderCount"
+                    type="number"
+                    class="form-input"
+                    inputmode="numeric"
+                    min="0"
+                    step="1"
+                    placeholder="10"
+                    required
+                  />
+
+                  <p class="form-help">
+                    বর্তমানে কতজন active member/border আছে
+                    সেটা দিন।
+                  </p>
+
+                  <p
+                    id="border-count-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+              </div>
+
+
+              <!-- Room Preview -->
+
+              <div
+                id="room-preview"
+                class="setup-preview"
+                hidden
+              >
+
+                <div class="setup-preview__header">
+
+                  <div>
+                    <span class="eyebrow">
+                      ROOM RANGE
+                    </span>
+
+                    <h3>
+                      Room Preview
+                    </h3>
+                  </div>
+
+                  <span
+                    id="room-preview-count"
+                    class="badge"
+                  >
+                    0 rooms
+                  </span>
+
+                </div>
+
+                <div
+                  id="room-preview-list"
+                  class="room-preview-list"
+                  aria-live="polite"
+                ></div>
+
+              </div>
+
+
+              <div class="setup-note">
+
+                <span class="setup-note__icon">
+                  ⓘ
+                </span>
+
+                <p>
+                  Room range সবার জন্য একই থাকবে।
+                  পরে Settings থেকে প্রয়োজন অনুযায়ী
+                  Member manage করা যাবে।
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="setup-actions setup-actions--end">
+
+              <button
+                type="button"
+                class="btn btn--primary"
+                data-next-step="2"
+              >
+                Continue
+                <span aria-hidden="true">→</span>
+              </button>
+
+            </div>
+
+          </section>
+
+
+          <!-- ===============================================
+               STEP 2 — MEMBERS
+          ================================================ -->
+
+          <section
+            class="setup-step"
+            data-step="2"
+            aria-labelledby="step-2-title"
+            hidden
+          >
+
+            <div class="card setup-card">
+
+              <div class="card-header">
+
+                <div>
+                  <span class="eyebrow">
+                    STEP 02
+                  </span>
+
+                  <h2 id="step-2-title">
+                    Members & Rooms
+                  </h2>
+
+                  <p>
+                    প্রতিটি Room-এর জন্য Member Name এবং
+                    Active status সেট করুন।
+                  </p>
+                </div>
+
+                <span
+                  id="member-count-badge"
+                  class="badge badge--success"
+                >
+                  0 members
+                </span>
+
+              </div>
+
+
+              <!-- Member Controls -->
+
+              <div class="filter-action-bar">
+
+                <div class="search-box">
+
+                  <span
+                    class="search-box__icon"
+                    aria-hidden="true"
+                  >
+                    ⌕
+                  </span>
+
+                  <input
+                    id="member-search"
+                    type="search"
+                    class="form-input"
+                    placeholder="Member বা Room খুঁজুন..."
+                    autocomplete="off"
+                  />
+
+                </div>
+
+                <button
+                  type="button"
+                  class="btn btn--secondary"
+                  data-action="activate-all-members"
+                >
+                  Activate All
+                </button>
+
+              </div>
+
+
+              <!-- Member List -->
+
+              <div
+                id="setup-members-list"
+                class="member-list setup-member-list"
+                aria-live="polite"
+              >
+
+                <div
+                  id="setup-members-empty"
+                  class="empty-state"
+                  hidden
+                >
+                  <div class="empty-state__icon">
+                    👤
+                  </div>
+
+                  <h3>
+                    কোনো Member পাওয়া যায়নি
+                  </h3>
+
+                  <p>
+                    Room range থেকে Member list তৈরি হবে।
+                  </p>
+                </div>
+
+              </div>
+
+
+              <template id="setup-member-template">
+
+                <div
+                  class="member-row setup-member-row"
+                  data-member-row
+                  data-room-number=""
+                >
+
+                  <div class="member-row__room">
+                    <span class="eyebrow">
+                      ROOM
+                    </span>
+
+                    <strong data-member-room>
+                      101
+                    </strong>
+                  </div>
+
+
+                  <div class="member-row__main">
+
+                    <label class="form-label sr-only">
+                      Member Name
+                    </label>
+
+                    <input
+                      type="text"
+                      class="form-input"
+                      data-member-name
+                      maxlength="100"
+                      placeholder="Member name"
+                    />
+
+                    <p
+                      class="form-error"
+                      data-member-error
+                      aria-live="polite"
+                    ></p>
+
+                  </div>
+
+
+                  <div class="member-row__status">
+
+                    <label class="switch">
+
+                      <input
+                        type="checkbox"
+                        data-member-active
+                        checked
+                      />
+
+                      <span
+                        class="switch__track"
+                        aria-hidden="true"
+                      >
+                        <span class="switch__thumb"></span>
+                      </span>
+
+                      <span class="switch__label">
+                        Active
+                      </span>
+
+                    </label>
+
+                  </div>
+
+                </div>
+
+              </template>
+
+
+              <div class="setup-note">
+
+                <span class="setup-note__icon">
+                  ⓘ
+                </span>
+
+                <p>
+                  যাদের Member Name ফাঁকা থাকবে তারা
+                  account-এর Member list-এ তৈরি হবে না।
+                  Active/Inactive status পরে Settings থেকেও
+                  পরিবর্তন করা যাবে।
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="setup-actions setup-actions--between">
+
+              <button
+                type="button"
+                class="btn btn--secondary"
+                data-prev-step="1"
+              >
+                <span aria-hidden="true">←</span>
+                Back
+              </button>
+
+              <button
+                type="button"
+                class="btn btn--primary"
+                data-next-step="3"
+              >
+                Continue
+                <span aria-hidden="true">→</span>
+              </button>
+
+            </div>
+
+          </section>
+
+
+          <!-- ===============================================
+               STEP 3 — INITIAL RATES
+          ================================================ -->
+
+          <section
+            class="setup-step"
+            data-step="3"
+            aria-labelledby="step-3-title"
+            hidden
+          >
+
+            <div class="card setup-card">
+
+              <div class="card-header">
+
+                <div>
+                  <span class="eyebrow">
+                    STEP 03
+                  </span>
+
+                  <h2 id="step-3-title">
+                    Initial Meal Rates
+                  </h2>
+
+                  <p>
+                    বর্তমান Meal Rate সেট করুন। প্রতিটি দিনের
+                    record-এর সাথে applied rate সংরক্ষিত হবে।
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="form-grid form-grid--rates">
+
+                <!-- Day -->
+
+                <div class="form-field">
+
+                  <label
+                    for="day-rate"
+                    class="form-label"
+                  >
+                    Day Meal
+                  </label>
+
+                  <div class="money-input">
+
+                    <span class="money-input__prefix">
+                      ৳
+                    </span>
+
+                    <input
+                      id="day-rate"
+                      name="dayRate"
+                      type="number"
+                      class="form-input"
+                      inputmode="decimal"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                    />
+
+                  </div>
+
+                  <p
+                    id="day-rate-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+
+                <!-- Night -->
+
+                <div class="form-field">
+
+                  <label
+                    for="night-rate"
+                    class="form-label"
+                  >
+                    Night Meal
+                  </label>
+
+                  <div class="money-input">
+
+                    <span class="money-input__prefix">
+                      ৳
+                    </span>
+
+                    <input
+                      id="night-rate"
+                      name="nightRate"
+                      type="number"
+                      class="form-input"
+                      inputmode="decimal"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                    />
+
+                  </div>
+
+                  <p
+                    id="night-rate-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+
+                <!-- Full -->
+
+                <div class="form-field">
+
+                  <label
+                    for="full-rate"
+                    class="form-label"
+                  >
+                    Full Meal
+                  </label>
+
+                  <div class="money-input">
+
+                    <span class="money-input__prefix">
+                      ৳
+                    </span>
+
+                    <input
+                      id="full-rate"
+                      name="fullRate"
+                      type="number"
+                      class="form-input"
+                      inputmode="decimal"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                    />
+
+                  </div>
+
+                  <p
+                    id="full-rate-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+
+                <!-- Guest -->
+
+                <div class="form-field">
+
+                  <label
+                    for="guest-rate"
+                    class="form-label"
+                  >
+                    Guest Meal
+                  </label>
+
+                  <div class="money-input">
+
+                    <span class="money-input__prefix">
+                      ৳
+                    </span>
+
+                    <input
+                      id="guest-rate"
+                      name="guestRate"
+                      type="number"
+                      class="form-input"
+                      inputmode="decimal"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                    />
+
+                  </div>
+
+                  <p
+                    id="guest-rate-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+
+                <!-- Friday Feast -->
+
+                <div class="form-field form-field--full">
+
+                  <label
+                    for="friday-feast-rate"
+                    class="form-label"
+                  >
+                    Friday Feast
+                  </label>
+
+                  <div class="money-input">
+
+                    <span class="money-input__prefix">
+                      ৳
+                    </span>
+
+                    <input
+                      id="friday-feast-rate"
+                      name="fridayFeastRate"
+                      type="number"
+                      class="form-input"
+                      inputmode="decimal"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                    />
+
+                  </div>
+
+                  <p
+                    id="friday-feast-rate-error"
+                    class="form-error"
+                    aria-live="polite"
+                  ></p>
+
+                </div>
+
+              </div>
+
+
+              <div class="alert alert--info">
+
+                <span
+                  class="alert__icon"
+                  aria-hidden="true"
+                >
+                  ⓘ
+                </span>
+
+                <div>
+                  <strong>
+                    Historical rate protection
+                  </strong>
+
+                  <p>
+                    Rate পরে পরিবর্তন করলেও পুরোনো Meal record-এর
+                    হিসাব নতুন Rate দিয়ে পরিবর্তিত হবে না।
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="setup-note">
+
+                <span class="setup-note__icon">
+                  ✓
+                </span>
+
+                <p>
+                  Setup সম্পন্ন হলে এই Mess-এর owner হিসেবে
+                  আপনি Dashboard-এ চলে যাবেন।
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="setup-actions setup-actions--between">
+
+              <button
+                type="button"
+                class="btn btn--secondary"
+                data-prev-step="2"
+              >
+                <span aria-hidden="true">←</span>
+                Back
+              </button>
+
+              <button
+                id="setup-submit"
+                type="submit"
+                class="btn btn--primary btn--large"
+              >
+                Create Mess
+                <span aria-hidden="true">✓</span>
+              </button>
+
+            </div>
+
+          </section>
+
+        </form>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="setup-footer">
+
+          <p>
+            Mealmate
+            <span aria-hidden="true">•</span>
+            <span data-app-version>
+              v1.0.0
+            </span>
+          </p>
+
+          <p>
+            Securely powered by Supabase
+          </p>
+
+        </footer>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================================
+       APP SCRIPT
+  ====================================================== -->
+
+  <script
+    type="module"
+    src="../js/app.js"
+  ></script>
+
+  <!--
+    setup.js will be activated in the next step.
+  -->
+
+</body>
+</html>
