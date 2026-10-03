@@ -1,28 +1,13 @@
 /* =========================================================
    Mealmate — Application Configuration
    File: js/config.js
-
-   Responsibility:
-   - App-wide constants
-   - Supabase connection configuration
-   - Business-rule constants
-   - UI/runtime defaults
-
-   Important:
-   - Only Supabase publishable key belongs in browser code.
-   - NEVER put a Supabase secret/service-role key here.
-   - Do not hardcode business calculations in page modules.
-   ========================================================= */
-
-
-/* =========================================================
-   1. APPLICATION
    ========================================================= */
 
 export const APP_CONFIG = Object.freeze({
   name: "Mealmate",
   shortName: "Mealmate",
   version: "1.0.0",
+
   environment: "production",
 
   timezone: "Asia/Dhaka",
@@ -51,32 +36,14 @@ export const APP_CONFIG = Object.freeze({
 
 
 /* =========================================================
-   2. SUPABASE
+   SUPABASE CONFIGURATION
    ========================================================= */
 
-/*
-  Add the values from:
-  Supabase Dashboard → Connect
-
-  Example:
-
-  url:
-  https://xxxxxxxxxxxx.supabase.co
+export const SUPABASE_CONFIG = Object.freeze({
+  url: "https://tevyrlunxuiuvhtdulan.supabase.co",
 
   publishableKey:
-  sb_publishable_xxxxxxxxxxxxxxxxx
-
-  IMPORTANT:
-  Never put:
-  - sb_secret_...
-  - service_role
-  - any server-only secret
-  in this file.
-*/
-
-export const SUPABASE_CONFIG = Object.freeze({
-  url: "",
-  publishableKey: "",
+    "sb_publishable_ORNGMSyMnRCA4mndhXA3rQ_UXWVZASn",
 
   options: Object.freeze({
     db: Object.freeze({
@@ -99,7 +66,7 @@ export const SUPABASE_CONFIG = Object.freeze({
 
 
 /* =========================================================
-   3. DATABASE CONTRACT
+   DATABASE CONTRACT
    ========================================================= */
 
 export const DB_CONFIG = Object.freeze({
@@ -122,11 +89,10 @@ export const DB_CONFIG = Object.freeze({
 
 
 /* =========================================================
-   4. BUSINESS RULES
+   BUSINESS RULES
    ========================================================= */
 
 export const BUSINESS_RULES = Object.freeze({
-  /* Meal types */
   mealTypes: Object.freeze([
     "full",
     "day",
@@ -134,7 +100,6 @@ export const BUSINESS_RULES = Object.freeze({
     "none",
   ]),
 
-  /* Money transaction types */
   transactionTypes: Object.freeze([
     "deposit",
     "adjustment",
@@ -142,32 +107,25 @@ export const BUSINESS_RULES = Object.freeze({
     "other",
   ]),
 
-  /* Friday */
   fridayDayIndex: 5,
 
-  /* Negative balance */
   negativeBalanceThreshold: 0,
 
-  /* Strong warning threshold */
   strongNegativeBalanceThreshold: -500,
 
-  /* Minimum valid rate */
   minimumRate: 0,
 
-  /* Room range */
   minimumRoomNumber: 1,
   maximumRoomNumber: 99999,
 
-  /* Guest quantity */
   minimumGuestQuantity: 1,
 
-  /* Default pagination */
   defaultPageSize: 50,
 });
 
 
 /* =========================================================
-   5. VALIDATION
+   VALIDATION
    ========================================================= */
 
 export const VALIDATION_CONFIG = Object.freeze({
@@ -198,14 +156,12 @@ export const VALIDATION_CONFIG = Object.freeze({
 
 
 /* =========================================================
-   6. UI CONFIGURATION
+   UI CONFIGURATION
    ========================================================= */
 
 export const UI_CONFIG = Object.freeze({
   toastDuration: 3500,
-
   debounceDelay: 250,
-
   animationDuration: 200,
 
   loadingText: "তথ্য লোড হচ্ছে...",
@@ -242,7 +198,7 @@ export const UI_CONFIG = Object.freeze({
 
 
 /* =========================================================
-   7. ROUTES
+   ROUTES
    ========================================================= */
 
 export const ROUTES = Object.freeze({
@@ -256,7 +212,7 @@ export const ROUTES = Object.freeze({
 
 
 /* =========================================================
-   8. NAVIGATION
+   NAVIGATION
    ========================================================= */
 
 export const NAV_ITEMS = Object.freeze([
@@ -298,7 +254,7 @@ export const NAV_ITEMS = Object.freeze([
 
 
 /* =========================================================
-   9. CACHE / PWA
+   PWA CONFIGURATION
    ========================================================= */
 
 export const PWA_CONFIG = Object.freeze({
@@ -321,15 +277,9 @@ export const PWA_CONFIG = Object.freeze({
 
 
 /* =========================================================
-   10. RUNTIME HELPERS
+   HELPERS
    ========================================================= */
 
-/**
- * Returns whether Supabase credentials have been configured.
- *
- * This only checks whether values exist.
- * It does not make a network request.
- */
 export function isSupabaseConfigured() {
   return Boolean(
     SUPABASE_CONFIG.url &&
@@ -338,10 +288,6 @@ export function isSupabaseConfigured() {
 }
 
 
-/**
- * Throws a clear configuration error before
- * the app attempts a Supabase connection.
- */
 export function assertSupabaseConfigured() {
   if (!isSupabaseConfigured()) {
     throw new Error(
@@ -351,20 +297,11 @@ export function assertSupabaseConfigured() {
 }
 
 
-/**
- * Returns the current application environment.
- */
 export function getEnvironment() {
   return APP_CONFIG.environment;
 }
 
 
-/**
- * Returns whether a feature is enabled.
- *
- * @param {keyof typeof APP_CONFIG.features} featureName
- * @returns {boolean}
- */
 export function isFeatureEnabled(featureName) {
   return APP_CONFIG.features[featureName] === true;
 }
